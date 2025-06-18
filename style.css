@@ -1,0 +1,165 @@
+:root {
+    --primary-color: #ff4d4d;
+    --secondary-color: #e63946;
+    --background-color: #fff5f5;
+    --text-color: #333;
+    --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Dancing Script', cursive, 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.heart-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 30px;
+}
+
+.heart {
+    position: absolute;
+    width: 100px;
+    height: 90px;
+    top: 15px;
+    left: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.heart:before, .heart:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 50px;
+    height: 80px;
+    background: var(--primary-color);
+    border-radius: 50px 50px 0 0;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+}
+
+.heart:before {
+    left: 50px;
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+}
+
+.heart:after {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin: 100% 100%;
+}
+
+.pulse-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 5px solid var(--primary-color);
+    border-radius: 50%;
+    opacity: 0;
+    z-index: 1;
+}
+
+.text {
+    font-size: 2.5rem;
+    color: var(--secondary-color);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    font-weight: 700;
+}
+
+.text.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Animações */
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.1); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.8); opacity: 0.7; }
+    70% { transform: scale(1.3); opacity: 0; }
+    100% { transform: scale(1.3); opacity: 0; }
+}
+
+.animate {
+    animation: heartbeat 0.8s ease-in-out;
+}
+
+.pulse {
+    animation: pulse 1.5s ease-out;
+}
+
+/* Efeitos de Interação */
+.heart:active {
+    transform: scale(0.95);
+}
+
+@media (hover: hover) {
+    .heart:hover {
+        transform: scale(1.05);
+    }
+    .heart:hover:before, .heart:hover:after {
+        background: var(--secondary-color);
+    }
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+    .heart {
+        width: 80px;
+        height: 72px;
+        top: 24px;
+        left: 20px;
+    }
+    .heart:before, .heart:after {
+        width: 40px;
+        height: 64px;
+    }
+    .heart:before {
+        left: 40px;
+    }
+    .text {
+        font-size: 2rem;
+    }
+}
+
+@media (max-height: 600px) {
+    .container {
+        padding-top: 10vh;
+    }
+}
